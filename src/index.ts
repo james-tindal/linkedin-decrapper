@@ -1,8 +1,9 @@
 
 import { Router } from './router'
 
+const hideSidebar = `aside.scaffold-layout__aside { display: none }`
+
 Router({
-  '/notifications/': `
-    aside.scaffold-layout__aside { display: none }
-  `
+  '/notifications/': hideSidebar,
+  '/feed/': hideSidebar,
 })

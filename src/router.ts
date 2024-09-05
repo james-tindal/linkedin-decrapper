@@ -26,15 +26,22 @@ type Action = string | (() => void) | {
 }
 type Route = { glob: string, action: Action }
 type Routes = Record<string, Action>
-let styleElement: HTMLStyleElement
+const styleElement = document.createElement('style')
 export function Router(routes: Routes) {
-  styleElement = document.createElement('style')
   waitFor.head.then(headElement => {
     headElement.append(styleElement)
 
-    for (const [glob, action] of Object.entries(routes))
-      matchRoute({ glob, action })
+    matchRoutes(routes)
+
+    addEventListener('locationchange', () =>
+      matchRoutes(routes))
   })
+}
+
+function matchRoutes(routes: Routes) {
+  styleElement.textContent = null
+  for (const [glob, action] of Object.entries(routes))
+    matchRoute({ glob, action })
 }
 
 function matchRoute({ glob, action }: Route) {

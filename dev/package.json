@@ -1,0 +1,16 @@
+{
+  "name": "linkedin-chrome-extension-dev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild ../src --bundle --minify --sourcemap=inline --format=esm --outfile=../extension/content-script.js",
+    "watch": "onchange -i ../src/**/* package.json -- npm run build"
+  },
+  "dependencies": {
+    "esbuild": "^0.23.1",
+    "onchange": "^7.1.0",
+    "tslib": "^2.7.0",
+    "typescript": "^5.5.4"
+  },
+  "type": "module"
+}

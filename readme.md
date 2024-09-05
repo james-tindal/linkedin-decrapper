@@ -1,0 +1,4 @@
+
+# LinkedIn Decrapper
+## Chrome extension
+

@@ -1,0 +1,17 @@
+{
+  "name": "User Scripts API Demo",
+  "version": "1.0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "120",
+  "description": "Uses the chrome.userScripts API to inject JavaScript into web pages.",
+  "background": {
+    "service_worker": "extension/service-worker.js"
+  },
+  "permissions": ["userScripts"],
+  "host_permissions": ["https://linkedin.com/*"],
+  "action": {},
+  "options_ui": {
+    "page": "extension/options.html",
+    "open_in_tab": false
+  }
+}

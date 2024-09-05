@@ -1,30 +1,23 @@
 /*  Monkey-patch locationchange event  */
 
-import { waitForHead } from './wait-for-element'
+import { waitFor } from './wait-for-elements'
 
 const oldPushState = history.pushState
-history.pushState = function pushState() {
-  const ret = oldPushState.apply(this, arguments)
+history.pushState = function pushState(...args) {
+  const ret = oldPushState.apply(this, args)
   window.dispatchEvent(new Event('locationchange'))
   return ret
 }
 
 const oldReplaceState = history.replaceState
-history.replaceState = function replaceState() {
-  const ret = oldReplaceState.apply(this, arguments)
+history.replaceState = function replaceState(...args) {
+  const ret = oldReplaceState.apply(this, args)
   window.dispatchEvent(new Event('locationchange'))
   return ret
 }
 
 window.addEventListener('popstate', () =>
   window.dispatchEvent(new Event('locationchange')))
-
-
-// Feature
-// can set a stylesheet to only show on this page
-
-// Refactor
-// Router takes a settings object instead of method calls
 
 
 type Action = string | (() => void) | {
@@ -36,7 +29,7 @@ type Routes = Record<string, Action>
 let styleElement: HTMLStyleElement
 export function Router(routes: Routes) {
   styleElement = document.createElement('style')
-  waitForHead.then(headElement => {
+  waitFor.head.then(headElement => {
     headElement.append(styleElement)
 
     for (const [glob, action] of Object.entries(routes))
@@ -54,18 +47,17 @@ function runAction(action: Action) {
   const style =
     typeof action == 'string' ? action
     : 'style' in action ? action.style
-    : null
+    : undefined
   
   const script =
     typeof action == 'function' ? action
     : typeof action == 'object' && 'script' in action ? action.script
-    : null
+    : undefined
   
-  // @ts-expect-error
   setStyle(style)
   script?.()
 }
 
-function setStyle(style: string | null) {
-  styleElement.textContent = style
+function setStyle(style?: string) {
+  styleElement.textContent = style ?? null
 }

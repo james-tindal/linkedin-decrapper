@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "lib": ["ES2015", "DOM"]
+    "lib": ["ESNext", "DOM", "dom.iterable"],
+    "strictBindCallApply": true,
+    "downlevelIteration": true,
+    "moduleDetection": "force"
   },
   "include": ["../src/**/*.ts"]
 }

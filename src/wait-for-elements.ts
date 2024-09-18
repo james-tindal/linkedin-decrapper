@@ -1,6 +1,6 @@
 import { Stream } from "./stream"
 
-const appends = new Stream<Element>(push => {
+const newElements = new Stream<Element>(push => {
   const observer = new MutationObserver(records => {
     for (const record of records)
       for (const node of record.addedNodes)
@@ -11,28 +11,15 @@ const appends = new Stream<Element>(push => {
     childList: true,
     subtree: true
   })
-  return observer.disconnect
+  return observer.disconnect.bind(observer)
 })
 
-const one = <Out extends Element>(selector: string) => new Promise(resolve => {
-  const immediateResult = document.querySelector(selector)
-  if (immediateResult)
-    return resolve(immediateResult)
-
-  const unsubscribe = appends
-    .filter((element): element is Out => element.matches(selector))
-    .subscribe(element => {
-      resolve(element)
-      unsubscribe()
-    })
-})
-
-const many = <Out extends Element>(selector: string) => new Stream<Out>(push => {
+const selector = <Out extends Element>(selector: string) => new Stream<Out>(push => {
   const immediateResult = document.querySelectorAll(selector) as NodeListOf<Out>
   for (const element of immediateResult)
     push(element)
 
-  return appends
+  return newElements
     .filter((element): element is Out => element.matches(selector))
     .subscribe(push)
 })
@@ -42,7 +29,7 @@ const head = new Promise<HTMLHeadElement>(resolve => {
   if (immediateResult)
     return resolve(immediateResult)
 
-  const unsubscribe = appends
+  const unsubscribe = newElements
     .filter((element): element is HTMLHeadElement => element instanceof HTMLHeadElement)
     .subscribe(headElement => {
       resolve(headElement)
@@ -50,4 +37,4 @@ const head = new Promise<HTMLHeadElement>(resolve => {
     })
 })
 
-export const waitFor = { one, many, head }
+export const waitFor = { selector, head }

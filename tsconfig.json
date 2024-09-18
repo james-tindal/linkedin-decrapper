@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "dom.iterable"],
+    "target": "ES6",
+    "strict": true,
+    "moduleDetection": "force",
     "strictBindCallApply": true,
-    "downlevelIteration": true,
-    "moduleDetection": "force"
-  },
-  "include": ["../src/**/*.ts"]
+  }
 }

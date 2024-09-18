@@ -18,8 +18,8 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0
       typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
+        specifier: 5.6.1-rc
+        version: 5.6.1-rc
 
 packages:
 
@@ -276,8 +276,8 @@ packages:
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
-  typescript@5.5.4:
-    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+  typescript@5.6.1-rc:
+    resolution: {integrity: sha512-E3b2+1zEFu84jB0YQi9BORDjz9+jGbwwy1Zi3G0LUNw7a7cePUrHMRNy8aPh53nXpkFGVHSxIZo5vKTfYaFiBQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -483,7 +483,7 @@ snapshots:
 
   tslib@2.7.0: {}
 
-  typescript@5.5.4: {}
+  typescript@5.6.1-rc: {}
 
   which@2.0.2:
     dependencies:
